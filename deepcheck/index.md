@@ -1,3 +1,0 @@
-# Deepcheck
-
-Check javascript bugs
