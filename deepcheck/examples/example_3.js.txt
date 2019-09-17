@@ -1,0 +1,7 @@
+grunt.initConfig({
+  execute: { ... }, copy: { ... }, checktextdomain: { ... },
+  wp_read_me_to_markdown: { ... }, makepot: { ... }
+});
+// In the following line, `copy` should also be included
+grunt.registerTask('default', ['execute', 'checktextdomain',
+  'wp_read_me_to_markdown', 'makepot'])

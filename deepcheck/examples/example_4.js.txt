@@ -1,0 +1,3 @@
+// `parseInt` should be omitted since
+// `===` indicates `this.value` is of type number
+parseInt((this.value === 0 ? 1 : this.value) / 20)

@@ -1,0 +1,7 @@
+if (matches) {
+  return {
+    episode: Number(matches.groups.episode),
+    hosts: matches.groups.hosts.split(/([,&]+|\sand\s)/).
+      map(e1 => S(e1).trim().s)
+  };
+}
