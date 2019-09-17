@@ -1,6 +1,6 @@
-document.querySelector("a").addEventListener(
-  "click",
+document.querySelector("a").addEventListener("click",
   function (event) {
+    // `InnerHTML` should be `innerHTML`
     document.querySelector("ul").InnerHTML = "";
   }
 )

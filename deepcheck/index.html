@@ -46,7 +46,7 @@
             <template id="code-example-template">
               <div class="card code-holder">
                 <div class="card-body">
-                  <div class="code-container"></div>
+                  <textarea class="code-container"></textarea>
                 </div>
               </div>
             </template>
@@ -55,12 +55,33 @@
             </div>
           </div>
           <div class="col">
-            <h2 class="mt-5">Unveil hidden bugs in JavaScript like no before</h2>
+            <h2 class="mt-5">Unveil hidden bugs in JavaScript like no other</h2>
             <p class="lead">
-              What static analyzers cannot tell you, we can.
+              What other static analyzers cannot tell you, we can.
             </p>
             <p>
-              asdfasdf asdf asdf asd asf aass
+              To aid Javascript developers, researchers in programming languages have
+              built static analyzers for detecting common coding errors in Javascript.
+              But it's nevertheless a very hard task. As a dynamically typed language
+              JavaScript possesses the flexibility but also the potential to fail.
+              Uncommon bugs are scattered out there in the wild with no tool catching
+              them.
+            </p>
+            <p>
+              Existing tools like Eslint and TAJS while presenting lots of false
+              positives and negatives, also often requires you to have a
+              sophisticated software structure for them to do analyze. Furthermore,
+              they might get wrong with the library informations.
+            </p>
+            <p>
+              Our Deepcheck tool is trained by the real world bug fixes. It will
+              identify the hidden bugs in your code just like any human reader, and
+              provide you an option of fixing it.
+            </p>
+            <p>
+              In the future, this tool will be integrated to your everyday-editors
+              and help you as you type! Deepcheck is an intelligent companion who is
+              able to sense any tiny flaws in your code.
             </p>
           </div>
         </div>
@@ -78,10 +99,46 @@
 
       // The files that we are going to load
       const examples = [
-        "examples/example_1.js.txt",
-        "examples/example_2.js.txt",
-        "examples/example_3.js.txt",
-        "examples/example_4.js.txt"
+        {
+          file: "examples/example_1.js.txt",
+          bugs: [
+            {
+              from: { line: 3, ch: 33 },
+              to: { line: 3, ch: 42 },
+            },
+          ],
+        },
+        {
+          file: "examples/example_2.js.txt",
+          bugs: [
+            {
+              from: { line: 3, ch: 39 },
+              to: { line: 3, ch: 40 },
+            },
+            {
+              from: { line: 3, ch: 53 },
+              to: { line: 3, ch: 54 },
+            },
+          ],
+        },
+        {
+          file: "examples/example_3.js.txt",
+          bugs: [
+            {
+              from: { line: 5, ch: 0 },
+              to: { line: 5, ch: 67 },
+            }
+          ]
+        },
+        {
+          file: "examples/example_4.js.txt",
+          bugs: [
+            {
+              from: { line: 2, ch: 0 },
+              to: { line: 2, ch: 8 },
+            }
+          ]
+        },
       ];
 
       // Template
@@ -90,21 +147,28 @@
 
       (function loop(index) {
         if (index < examples.length) {
-          const exampleFile = examples[index];
+          const { file, bugs } = examples[index];
           $.ajax({
-            url: exampleFile,
+            url: file,
             type: "get",
             contentType: "text/plain",
             success: (result) => {
               const clone = document.importNode(template.content, true);
-              const id = `code-container-${index}`;
-              clone.querySelector(".code-container").id = id;
+              const textarea = clone.querySelector("textarea");
+              textarea.value = result;
               target.appendChild(clone);
-              CodeMirror(document.querySelector(`#${id}`), {
-                value: result,
+              const editor = CodeMirror.fromTextArea(textarea, {
                 mode: "javascript",
                 lineNumbers: true,
               });
+              for (const { from, to } of bugs) {
+                // console.log(`Marking ${JSON.stringify(from)} ${JSON.stringify(to)}`);
+                editor.markText(
+                  { line: from.line, ch: from.ch },
+                  { line: to.line, ch: to.ch},
+                  { className: "code-bug-mark" }
+                );
+              }
               loop(index + 1);
             }
           });
