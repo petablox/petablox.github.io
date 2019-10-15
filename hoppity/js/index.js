@@ -56,36 +56,84 @@ function loadExamples(examples, callback) {
 function setup(editors) {
   $(".card:first-child").addClass("show");
 
-  $(".card:not(.show)").each((index, elem) => {
+  $(".card:not(.show)").each((_, elem) => {
     $(elem).children().children(".textarea-holder").slideUp(0);
   });
 
-  $(".title").click((event) => {
-    const $card = $(event.target).parent().parent().parent();
+  $(".card-title").click((event) => {
+    const $card = $(event.currentTarget).parent().parent();
     if (!$card.hasClass("show")) {
       $card.addClass("show");
-      const $body = $card.children().children(".textarea-holder").slideDown(200);
+      $card.children().children(".textarea-holder").slideDown(200);
       $card.siblings(".show").each((index, elem) => {
         $(elem).removeClass("show");
-        const $body = $(elem).children().children(".textarea-holder").slideUp(200);
+        $(elem).children().children(".textarea-holder").slideUp(200);
       });
     }
   });
 
-  $(".run-example").each((idx, elem) => {
-    const $textarea = $(elem).parent().parent().children("textarea");
+  $(".run-example").each((index, elem) => {
+    const $textarea = $(elem).parent().parent().find("textarea");
     $(elem).click(() => {
       let code = $textarea.val();
-      $.ajax({
-        url: "http://drake.cis.upenn.edu/hoppity/find_bug",
-        type: "post",
-        data: { code },
-        success: (data) => {
-          console.log(data);
-        },
+      findBugs(code, (result) => {
+        const editor = editors[index];
+        for (const mark of editor.getAllMarks()) {
+          mark.clear();
+        }
+        let level = 0;
+        for (const { loc } of result) {
+          level += 1;
+          for (const { start, end } of loc) {
+            editor.markText(
+              { line: start.line, ch: start.column },
+              { line: end.line, ch: end.column },
+              { className: `code-bug-mark-${level}` },
+            );
+          }
+        }
       });
     });
   });
+}
+
+function findBugs(code, callback) {
+  callback([{
+    "op": "add_node",
+    "loc": [{
+      "start": { "line": 0, "column": 0, "offset": 2116 },
+      "end": { "line": 0, "column": 3, "offset": 2140 }
+    }],
+    "value": "False",
+    "type": "LiteralBooleanExpression",
+    "ch_rank": 1
+  }, {
+    "op": "add_node",
+    "loc": [{
+      "start": { "line": 1, "column": 4, "offset": 2116 },
+      "end": { "line": 1, "column": 6, "offset": 2140 }
+    }],
+    "value": "True",
+    "type": "LiteralBooleanExpression",
+    "ch_rank": 1
+  }, {
+    "op": "add_node",
+    "loc": [{
+      "start": { "line": 2, "column": 7, "offset": 722 },
+      "end": { "line": 2, "column": 9, "offset": 745 }
+    }],
+    "value": "20",
+    "type": "LiteralNumericExpression",
+    "ch_rank": 2
+  }]);
+
+  // Change to this when tested
+  // $.ajax({
+  //   url: "https://drake.cis.upenn.edu/hoppity/find_bug",
+  //   type: "post",
+  //   data: { code },
+  //   success: callback,
+  // });
 }
 
 function main() {
