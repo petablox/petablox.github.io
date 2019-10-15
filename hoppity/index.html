@@ -33,10 +33,6 @@
               <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Publications</a>
             </li>
           </ul>
-          <!-- <form class="form-inline mt-2 mt-md-0">
-            <input class="form-control mr-sm-2" type="text" placeholder="Search" aria-label="Search">
-            <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
-          </form> -->
         </div>
       </nav>
     </header>
@@ -111,106 +107,6 @@
     <script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
-    <script>
-      function loadExampleIndex(callback) {
-        $.ajax({
-          url: "examples/index.json",
-          type: "get",
-          contentType: "text/json",
-          success: callback
-        });
-      }
-
-      function loadExamples(examples, callback) {
-        const template = document.querySelector("#code-example-template");
-        const target = document.querySelector("#code-examples");
-        const editors = [];
-        (function loop(index) {
-          if (index < examples.length) {
-            const { file, bugs } = examples[index];
-            $.ajax({
-              url: file,
-              type: "get",
-              contentType: "text/plain",
-              success: (result) => {
-                $.ajax({
-                  url: bugs,
-                  type: "get",
-                  contentType: "text/plain",
-                  success: (bugs) => {
-                    const clone = document.importNode(template.content, true);
-                    const textarea = clone.querySelector("textarea");
-                    const id = clone.querySelector(".example-id");
-                    id.innerHTML = (index + 1);
-                    textarea.value = result;
-                    target.appendChild(clone);
-                    const editor = CodeMirror.fromTextArea(textarea, {
-                      mode: "javascript",
-                      lineNumbers: true,
-                    });
-                    editors[index] = editor;
-                    for (const { from, to } of bugs) {
-                      editor.markText(
-                        { line: from.line, ch: from.ch },
-                        { line: to.line, ch: to.ch },
-                        { className: "code-bug-mark" },
-                      );
-                    }
-                    loop(index + 1);
-                  }
-                });
-              }
-            });
-          } else {
-            callback(editors);
-          }
-        })(0);
-      }
-
-      function setup(editors) {
-        $(".card:first-child").addClass("show");
-
-        $(".card:not(.show)").each((index, elem) => {
-          $(elem).children().children(".textarea-holder").slideUp(0);
-        });
-
-        $(".title").click((event) => {
-          const $card = $(event.target).parent().parent().parent();
-          if (!$card.hasClass("show")) {
-            $card.addClass("show");
-            const $body = $card.children().children(".textarea-holder").slideDown(200);
-            $card.siblings(".show").each((index, elem) => {
-              $(elem).removeClass("show");
-              const $body = $(elem).children().children(".textarea-holder").slideUp(200);
-            });
-          }
-        });
-
-        $(".run-example").each((idx, elem) => {
-          const $textarea = $(elem).parent().parent().children("textarea");
-          $(elem).click(() => {
-            let code = $textarea.val();
-            $.ajax({
-              url: "http://drake.cis.upenn.edu/hoppity/find_bug",
-              type: "post",
-              data: { code },
-              success: (data) => {
-                console.log(data);
-              },
-            });
-          });
-        });
-      }
-
-      function main() {
-        loadExampleIndex((exampleIndex) => {
-          loadExamples(exampleIndex, (editors) => {
-            setup(editors);
-          });
-        });
-      }
-
-      main();
-    </script>
+    <script src="js/index.js"></script>
   </body>
 </html>
