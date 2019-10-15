@@ -8,7 +8,8 @@
     <link rel="stylesheet" href="vendor/codemirror/lib/codemirror.css">
     <script src="vendor/codemirror/mode/javascript/javascript.js"></script>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-    <title>Deepcheck - Petablox</title>
+    <script src="https://kit.fontawesome.com/51df9fae3c.js" crossorigin="anonymous"></script>
+    <title>Hoppity - Petablox</title>
   </head>
   <body>
     <header>
@@ -20,13 +21,13 @@
         <div class="collapse navbar-collapse" id="navbarCollapse">
           <ul class="navbar-nav mr-auto">
             <li class="nav-item active">
-              <a class="nav-link" href="/deepcheck/">Home <span class="sr-only">(current)</span></a>
+              <a class="nav-link" href="/hoppity/">Home <span class="sr-only">(current)</span></a>
             </li>
             <li class="nav-item">
               <a class="nav-link" href="/">Petablox</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="/deepcheck/blogs">Blogs</a>
+              <a class="nav-link" href="/hoppity/blogs">Blogs</a>
             </li>
             <li class="nav-item">
               <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Publications</a>
@@ -42,22 +43,37 @@
     <main role="main" class="flex-shrink-0" style="padding-top: 40px">
       <div class="container">
         <div class="row">
-          <div class="col">
+          <div class="col col-7" style="padding-top: 20px">
             <template id="code-example-template">
               <div class="card code-holder">
                 <div class="card-body">
-                  <textarea class="code-container"></textarea>
+                  <div class="card-title">
+                    <div class="title">
+                      Example
+                      <span class="example-id">1</span>
+                    </div>
+                    <div class="run-example">
+                      <span>Find Bug</span>
+                      <i class="fas fa-play"></i>
+                    </div>
+                  </div>
+                  <div class="textarea-holder">
+                    <textarea class="code-container"></textarea>
+                  </div>
                 </div>
               </div>
             </template>
             <div id="code-examples">
               <!-- Examples goes here -->
             </div>
+            <div style="margin-top: 10px; text-align: center; color: rgba(0, 0, 0, 0.6)">
+              (Feel free to change any of them and hit the "Find Bug" button)
+            </div>
           </div>
-          <div class="col">
+          <div class="col col-5">
             <h2 class="mt-5">Unveil hidden bugs in JavaScript like no other</h2>
             <p class="lead">
-              What other static analyzers cannot tell you, we can.
+              What other static analyzers cannot tell, we can.
             </p>
             <p>
               To aid Javascript developers, researchers in programming languages have
@@ -89,7 +105,7 @@
     </main>
     <footer class="footer mt-auto py-3">
       <div class="container text-center">
-        <span class="text-muted">&copy; 2019 Petablox, University of Pennsylvania</span>
+        <span class="text-muted" style="font-size: 12px">&copy; 2019 Petablox, University of Pennsylvania</span>
       </div>
     </footer>
     <script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
@@ -144,6 +160,7 @@
       // Template
       const template = document.querySelector("#code-example-template");
       const target = document.querySelector("#code-examples");
+      const editors = [];
 
       (function loop(index) {
         if (index < examples.length) {
@@ -155,25 +172,65 @@
             success: (result) => {
               const clone = document.importNode(template.content, true);
               const textarea = clone.querySelector("textarea");
+              const id = clone.querySelector(".example-id");
+              id.innerHTML = (index + 1);
               textarea.value = result;
               target.appendChild(clone);
               const editor = CodeMirror.fromTextArea(textarea, {
                 mode: "javascript",
                 lineNumbers: true,
               });
+              editors[index] = editor;
               for (const { from, to } of bugs) {
                 // console.log(`Marking ${JSON.stringify(from)} ${JSON.stringify(to)}`);
                 editor.markText(
                   { line: from.line, ch: from.ch },
-                  { line: to.line, ch: to.ch},
-                  { className: "code-bug-mark" }
+                  { line: to.line, ch: to.ch },
+                  { className: "code-bug-mark" },
                 );
               }
               loop(index + 1);
             }
           });
+        } else {
+          setTimeout(setup, 100);
         }
       })(0);
+
+      function setup() {
+        $(".card:first-child").addClass("show");
+
+        $(".card:not(.show)").each((index, elem) => {
+          $(elem).children().children(".textarea-holder").slideUp(0);
+        });
+
+        $(".title").click((event) => {
+          const $card = $(event.target).parent().parent().parent();
+          if (!$card.hasClass("show")) {
+            $card.addClass("show");
+            const $body = $card.children().children(".textarea-holder").slideDown(200);
+            $card.siblings(".show").each((index, elem) => {
+              $(elem).removeClass("show");
+              const $body = $(elem).children().children(".textarea-holder").slideUp(200);
+            });
+          }
+        });
+
+        $(".run-example").each((idx, elem) => {
+          const $textarea = $(elem).parent().parent().children("textarea");
+          $(elem).click(() => {
+            let code = $textarea.val();
+            $.ajax({
+              url: "http://drake.cis.upenn.edu/hoppity/find_bug",
+              type: "post",
+              data: { code },
+              success: (data) => {
+                console.log(data);
+              },
+            });
+          });
+        });
+      }
     </script>
   </body>
 </html>

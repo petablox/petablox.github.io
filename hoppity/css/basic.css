@@ -14,15 +14,55 @@ footer {
 }
 
 .code-holder {
-  margin-top: 20px;
+  margin-top: 15px;
 }
 
 .card-body {
   padding: 0 !important;
 }
 
+.card-title {
+  transition: all 0.2s;
+  display: flex;
+  margin: 0 !important;
+  border-bottom: 1px solid rgba(0,0,0,.125);
+}
+
+.card-title:hover {
+  background-color: rgba(0, 0, 0, 0.05);
+}
+
+.card-title:active {
+  background-color: rgba(0, 0, 0, 0.1);
+}
+
+.title {
+  flex: 1;
+  line-height: 40px;
+  padding: 0 10px;
+  cursor: pointer;
+}
+
+.run-example {
+  transition: all 0.2s;
+  padding: 0 10px;
+  line-height: 40px;
+  text-align: center;
+  color: rgb(27, 160, 0);
+  text-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
+  cursor: pointer;
+}
+
+.run-example:hover {
+  background-color: rgba(0, 0, 0, 0.1);
+}
+
+.run-example:active {
+  background-color: rgba(0, 0, 0, 0.2);
+}
+
 .CodeMirror {
-  height: 150px !important;
+  height: 350px !important;
 }
 
 .code-bug-mark {
