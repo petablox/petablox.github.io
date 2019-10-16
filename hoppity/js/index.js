@@ -92,8 +92,8 @@ function setup(editors) {
             level += 1;
             for (const { start, end } of loc) {
               editor.markText(
-                { line: start.line, ch: start.column },
-                { line: end.line, ch: end.column },
+                { line: start.line - 1, ch: start.column },
+                { line: end.line - 1, ch: end.column },
                 { className: `code-bug-mark-${level}` },
               );
             }
