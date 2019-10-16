@@ -75,29 +75,38 @@ function setup(editors) {
   $(".run-example").each((index, elem) => {
     const $textarea = $(elem).parent().parent().find("textarea");
     $(elem).click(() => {
-      let code = $textarea.val();
-      findBugs(code, (result) => {
-        const editor = editors[index];
-        for (const mark of editor.getAllMarks()) {
-          mark.clear();
-        }
-        let level = 0;
-        for (const { loc } of result) {
-          level += 1;
-          for (const { start, end } of loc) {
-            editor.markText(
-              { line: start.line, ch: start.column },
-              { line: end.line, ch: end.column },
-              { className: `code-bug-mark-${level}` },
-            );
+      if ($(elem).hasClass("disabled")) {
+
+      } else {
+
+        $(elem).addClass("disabled");
+
+        let code = $textarea.val();
+        findBugs(code, (result) => {
+          const editor = editors[index];
+          for (const mark of editor.getAllMarks()) {
+            mark.clear();
           }
-        }
-      });
+          let level = 0;
+          for (const { loc } of result) {
+            level += 1;
+            for (const { start, end } of loc) {
+              editor.markText(
+                { line: start.line, ch: start.column },
+                { line: end.line, ch: end.column },
+                { className: `code-bug-mark-${level}` },
+              );
+            }
+          }
+        }, () => {
+          $(elem).removeClass("disabled");
+        });
+      }
     });
   });
 }
 
-function findBugs(code, callback) {
+function findBugs(code, callback, final) {
   // callback([{
   //   "op": "add_node",
   //   "loc": [{
@@ -139,6 +148,7 @@ function findBugs(code, callback) {
         callback(result.content);
       }
     },
+    complete: final,
   });
 }
 
