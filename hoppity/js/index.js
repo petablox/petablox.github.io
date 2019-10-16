@@ -54,6 +54,10 @@ function loadExamples(examples, callback) {
 }
 
 function setup(editors) {
+  $(".card").each((index, elem) => {
+    $(elem).attr("id", `editor-card-${index}`);
+  });
+
   $(".card:first-child").addClass("show");
 
   $(".card:not(.show)").each((_, elem) => {
@@ -94,6 +98,16 @@ function setup(editors) {
               );
             }
           }
+          setTimeout(() => {
+            for (let i = 0; i < result.length; i++) {
+              const level = i + 1;
+              setupFloatBox(
+                `#editor-card-${index} .code-bug-mark-${level}`,
+                `#editor-card-${index} .float-result-${level}`,
+                JSON.stringify(result[i])
+              );
+            }
+          }, 500);
         }, () => {
           $(elem).removeClass("disabled");
         });
@@ -102,51 +116,73 @@ function setup(editors) {
   });
 }
 
+function setupFloatBox(hoverSelector, floatBoxSelector, text) {
+  const offset = [10, 10];
+
+  $(floatBoxSelector).text(text);
+
+  $(hoverSelector).hover(() => {
+    $(floatBoxSelector).fadeIn(100);
+  }, () => {
+    $(floatBoxSelector).fadeOut(100);
+  });
+
+  $(hoverSelector).mouseover((event) => {
+    let x = event.pageX + offset[0];
+    let y = event.pageY + offset[1];
+    $(floatBoxSelector).css({
+      "left": x,
+      "top": y,
+    });
+  });
+}
+
 function findBugs(code, callback, final) {
 
   // Change to this when tested
-  $.ajax({
-    url: "https://drake.cis.upenn.edu/hoppity/find_bug",
-    type: "post",
-    data: { code },
-    success: (result) => {
-      if ("code" in result) {
-        alert(result.msg);
-      } else {
-        callback(result.content);
-      }
-    },
-    complete: final
-  });
+  // $.ajax({
+  //   url: "https://drake.cis.upenn.edu/hoppity/find_bug",
+  //   type: "post",
+  //   data: { code },
+  //   success: (result) => {
+  //     if ("code" in result) {
+  //       alert(result.msg);
+  //     } else {
+  //       callback(result.content);
+  //     }
+  //   },
+  //   complete: final
+  // });
 
-  // callback([{
-  //   "op": "add_node",
-  //   "loc": [{
-  //     "start": { "line": 0, "column": 0, "offset": 2116 },
-  //     "end": { "line": 0, "column": 3, "offset": 2140 }
-  //   }],
-  //   "value": "False",
-  //   "type": "LiteralBooleanExpression",
-  //   "ch_rank": 1
-  // }, {
-  //   "op": "add_node",
-  //   "loc": [{
-  //     "start": { "line": 1, "column": 4, "offset": 2116 },
-  //     "end": { "line": 1, "column": 6, "offset": 2140 }
-  //   }],
-  //   "value": "True",
-  //   "type": "LiteralBooleanExpression",
-  //   "ch_rank": 1
-  // }, {
-  //   "op": "add_node",
-  //   "loc": [{
-  //     "start": { "line": 2, "column": 7, "offset": 722 },
-  //     "end": { "line": 2, "column": 9, "offset": 745 }
-  //   }],
-  //   "value": "20",
-  //   "type": "LiteralNumericExpression",
-  //   "ch_rank": 2
-  // }]);
+  callback([{
+    "op": "add_node",
+    "loc": [{
+      "start": { "line": 0, "column": 0, "offset": 2116 },
+      "end": { "line": 0, "column": 3, "offset": 2140 }
+    }],
+    "value": "False",
+    "type": "LiteralBooleanExpression",
+    "ch_rank": 1
+  }, {
+    "op": "add_node",
+    "loc": [{
+      "start": { "line": 1, "column": 4, "offset": 2116 },
+      "end": { "line": 1, "column": 6, "offset": 2140 }
+    }],
+    "value": "True",
+    "type": "LiteralBooleanExpression",
+    "ch_rank": 1
+  }, {
+    "op": "add_node",
+    "loc": [{
+      "start": { "line": 2, "column": 7, "offset": 722 },
+      "end": { "line": 2, "column": 9, "offset": 745 }
+    }],
+    "value": "20",
+    "type": "LiteralNumericExpression",
+    "ch_rank": 2
+  }]);
+  final();
 }
 
 function main() {

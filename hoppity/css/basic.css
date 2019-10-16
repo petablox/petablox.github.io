@@ -70,7 +70,7 @@ footer {
 }
 
 .CodeMirror {
-  height: 350px !important;
+  height: 400px !important;
 }
 
 .code-bug-mark {
@@ -87,6 +87,18 @@ footer {
 
 .code-bug-mark-3 {
   background-color: rgba(255, 195, 30, 0.2);
+}
+
+.float-result {
+  position: fixed;
+  background-color: rgba(255, 255, 255, 1);
+  border-radius: 4px;
+  border: 1px solid rgba(0, 0, 0, 0.125);
+  z-index: 10;
+  padding: 10px;
+  min-width: 100px;
+  max-width: 350px;
+  /* box-shadow: 0 0 10px rgba(0, 0, 0, 0.3); */
 }
 
 .CodeMirror-gutters {
