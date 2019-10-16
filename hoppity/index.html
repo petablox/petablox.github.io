@@ -40,6 +40,14 @@
       <div class="container">
         <div class="row">
           <div class="col col-7" style="padding-top: 20px">
+            <template id="prediction-template">
+              <ul class="prediction">
+                <li>Operation: <span class="operation"></span></li>
+                <li>Value: <span class="value"></span></li>
+                <li>Type: <span class="type"></span></li>
+                <li>CH Rank: <span class="ch-rank"></span></li>
+              </ul>
+            </template>
             <template id="code-example-template">
               <div class="card code-holder">
                 <div class="card-body">
@@ -55,9 +63,9 @@
                   </div>
                   <div class="textarea-holder">
                     <textarea class="code-container"></textarea>
-                    <div class="float-result float-result-1" style="display: none"></div>
-                    <div class="float-result float-result-2" style="display: none"></div>
-                    <div class="float-result float-result-3" style="display: none"></div>
+                    <div class="float-box float-box-1" style="display: none"></div>
+                    <div class="float-box float-box-2" style="display: none"></div>
+                    <div class="float-box float-box-3" style="display: none"></div>
                   </div>
                 </div>
               </div>

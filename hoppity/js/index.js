@@ -103,8 +103,8 @@ function setup(editors) {
               const level = i + 1;
               setupFloatBox(
                 `#editor-card-${index} .code-bug-mark-${level}`,
-                `#editor-card-${index} .float-result-${level}`,
-                JSON.stringify(result[i])
+                `#editor-card-${index} .float-box-${level}`,
+                result[i]
               );
             }
           }, 500);
@@ -116,15 +116,42 @@ function setup(editors) {
   });
 }
 
-function setupFloatBox(hoverSelector, floatBoxSelector, text) {
+function renderSingleResult(result) {
+  const template = document.querySelector("#prediction-template");
+  const clone = $(document.importNode(template.content, true));
+  clone.find(".operation").text(getOperation(result.op));
+  clone.find(".value").text(result["value"]);
+  clone.find(".type").text(result["type"]);
+  clone.find(".ch-rank").text(result["ch_rank"]);
+  return clone;
+}
+
+function getOperation(op) {
+  switch (op) {
+    case "del_node": return "Delete Node";
+    case "add_node": return "Add Node";
+    default: return op;
+  }
+}
+
+function setupFloatBox(hoverSelector, floatBoxSelector, result) {
   const offset = [10, 10];
 
-  $(floatBoxSelector).text(text);
+  $(floatBoxSelector).html(""); // Clear it
+  $(floatBoxSelector).append(renderSingleResult(result));
+
+  let is_in = false;
 
   $(hoverSelector).hover(() => {
+    is_in = true;
     $(floatBoxSelector).fadeIn(100);
   }, () => {
-    $(floatBoxSelector).fadeOut(100);
+    is_in = false;
+    setTimeout(() => {
+      if (!is_in) {
+        $(floatBoxSelector).fadeOut(100);
+      }
+    }, 10);
   });
 
   $(hoverSelector).mousemove((event) => {
@@ -140,49 +167,49 @@ function setupFloatBox(hoverSelector, floatBoxSelector, text) {
 function findBugs(code, callback, final) {
 
   // Change to this when tested
-  // $.ajax({
-  //   url: "https://drake.cis.upenn.edu/hoppity/find_bug",
-  //   type: "post",
-  //   data: { code },
-  //   success: (result) => {
-  //     if ("code" in result) {
-  //       alert(result.msg);
-  //     } else {
-  //       callback(result.content);
-  //     }
-  //   },
-  //   complete: final
-  // });
+  $.ajax({
+    url: "https://hoppity.cis.upenn.edu/find_bug",
+    type: "post",
+    data: { code },
+    success: (result) => {
+      if ("code" in result) {
+        alert(result.msg);
+      } else {
+        callback(result.content);
+      }
+    },
+    complete: final
+  });
 
-  callback([{
-    "op": "add_node",
-    "loc": [{
-      "start": { "line": 0, "column": 0, "offset": 2116 },
-      "end": { "line": 0, "column": 3, "offset": 2140 }
-    }],
-    "value": "False",
-    "type": "LiteralBooleanExpression",
-    "ch_rank": 1
-  }, {
-    "op": "add_node",
-    "loc": [{
-      "start": { "line": 1, "column": 4, "offset": 2116 },
-      "end": { "line": 1, "column": 6, "offset": 2140 }
-    }],
-    "value": "True",
-    "type": "LiteralBooleanExpression",
-    "ch_rank": 1
-  }, {
-    "op": "add_node",
-    "loc": [{
-      "start": { "line": 2, "column": 7, "offset": 722 },
-      "end": { "line": 2, "column": 9, "offset": 745 }
-    }],
-    "value": "20",
-    "type": "LiteralNumericExpression",
-    "ch_rank": 2
-  }]);
-  final();
+  // callback([{
+  //   "op": "add_node",
+  //   "loc": [{
+  //     "start": { "line": 0, "column": 0, "offset": 2116 },
+  //     "end": { "line": 0, "column": 3, "offset": 2140 }
+  //   }],
+  //   "value": "False",
+  //   "type": "LiteralBooleanExpression",
+  //   "ch_rank": 1
+  // }, {
+  //   "op": "add_node",
+  //   "loc": [{
+  //     "start": { "line": 1, "column": 4, "offset": 2116 },
+  //     "end": { "line": 1, "column": 6, "offset": 2140 }
+  //   }],
+  //   "value": "True",
+  //   "type": "LiteralBooleanExpression",
+  //   "ch_rank": 1
+  // }, {
+  //   "op": "add_node",
+  //   "loc": [{
+  //     "start": { "line": 2, "column": 7, "offset": 722 },
+  //     "end": { "line": 2, "column": 9, "offset": 745 }
+  //   }],
+  //   "value": "20",
+  //   "type": "LiteralNumericExpression",
+  //   "ch_rank": 2
+  // }]);
+  // final();
 }
 
 function main() {
