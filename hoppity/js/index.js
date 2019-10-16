@@ -132,7 +132,13 @@ function findBugs(code, callback) {
     url: "https://drake.cis.upenn.edu/hoppity/find_bug",
     type: "post",
     data: { code },
-    success: callback,
+    success: (result) => {
+      if ("code" in result) {
+        alert(result.msg);
+      } else {
+        callback(result.content);
+      }
+    },
   });
 }
 
