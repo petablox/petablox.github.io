@@ -41,12 +41,16 @@
         <div class="row">
           <div class="col col-7" style="padding-top: 20px">
             <template id="prediction-template">
-              <ul class="prediction">
-                <li>Operation: <span class="operation"></span></li>
-                <li>Value: <span class="value"></span></li>
-                <li>Type: <span class="type"></span></li>
-                <li>CH Rank: <span class="ch-rank"></span></li>
-              </ul>
+              <div class="prediction-holder">
+                <h6><span class="number"></span> Prediction:</h6>
+                <hr />
+                <ul class="prediction">
+                  <li>Operation: <span class="operation"></span></li>
+                  <li>Value: <span class="value"></span></li>
+                  <li>Type: <span class="type"></span></li>
+                  <li>CH Rank: <span class="ch-rank"></span></li>
+                </ul>
+              </div>
             </template>
             <template id="code-example-template">
               <div class="card code-holder">
@@ -63,9 +67,14 @@
                   </div>
                   <div class="textarea-holder">
                     <textarea class="code-container"></textarea>
-                    <div class="float-box float-box-1" style="display: none"></div>
-                    <div class="float-box float-box-2" style="display: none"></div>
-                    <div class="float-box float-box-3" style="display: none"></div>
+                    <div class="floating-boxes">
+                      <div class="float-box float-box-1" style="display: none"></div>
+                      <div class="float-box float-box-2" style="display: none"></div>
+                      <div class="float-box float-box-3" style="display: none"></div>
+                    </div>
+                    <div class="textarea-mask" style="display: none">
+                      <img src="img/puff.svg" />
+                    </div>
                   </div>
                 </div>
               </div>

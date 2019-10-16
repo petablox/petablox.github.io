@@ -77,10 +77,20 @@ function setup(editors) {
   });
 
   $(".run-example").each((index, elem) => {
+    function onStart() {
+      $(elem).addClass("disabled");
+      $(elem).parent().parent().find(".textarea-mask").fadeIn(200);
+    }
+
+    function onEnd() {
+      $(elem).removeClass("disabled");
+      $(elem).parent().parent().find(".textarea-mask").fadeOut(200);
+    }
+
     $(elem).click(() => {
       const editor = editors[index];
       if (!$(elem).hasClass("disabled")) {
-        $(elem).addClass("disabled");
+        onStart();
         let code = editor.getValue();
         findBugs(code, (result) => {
           const editor = editors[index];
@@ -104,26 +114,35 @@ function setup(editors) {
               setupFloatBox(
                 `#editor-card-${index} .code-bug-mark-${level}`,
                 `#editor-card-${index} .float-box-${level}`,
-                result[i]
+                result[i],
+                i
               );
             }
           }, 500);
-        }, () => {
-          $(elem).removeClass("disabled");
-        });
+        }, onEnd);
       }
     });
   });
 }
 
-function renderSingleResult(result) {
+function renderSingleResult(result, index) {
   const template = document.querySelector("#prediction-template");
   const clone = $(document.importNode(template.content, true));
+  clone.find(".number").text(getNumber(index));
   clone.find(".operation").text(getOperation(result.op));
-  clone.find(".value").text(result["value"]);
-  clone.find(".type").text(result["type"]);
-  clone.find(".ch-rank").text(result["ch_rank"]);
+  clone.find(".value").text(result["value"] || "None");
+  clone.find(".type").text(result["type"] || "None");
+  clone.find(".ch-rank").text(result["ch_rank"] || "None");
   return clone;
+}
+
+function getNumber(index) {
+  switch (index) {
+    case 0: return "First";
+    case 1: return "Second";
+    case 2: return "Third";
+    default: return index;
+  }
 }
 
 function getOperation(op) {
@@ -134,11 +153,11 @@ function getOperation(op) {
   }
 }
 
-function setupFloatBox(hoverSelector, floatBoxSelector, result) {
+function setupFloatBox(hoverSelector, floatBoxSelector, result, index) {
   const offset = [10, 10];
 
   $(floatBoxSelector).html(""); // Clear it
-  $(floatBoxSelector).append(renderSingleResult(result));
+  $(floatBoxSelector).append(renderSingleResult(result, index));
 
   let is_in = false;
 
