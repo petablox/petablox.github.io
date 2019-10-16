@@ -73,15 +73,11 @@ function setup(editors) {
   });
 
   $(".run-example").each((index, elem) => {
-    const $textarea = $(elem).parent().parent().find("textarea");
     $(elem).click(() => {
-      if ($(elem).hasClass("disabled")) {
-
-      } else {
-
+      const editor = editors[index];
+      if (!$(elem).hasClass("disabled")) {
         $(elem).addClass("disabled");
-
-        let code = $textarea.val();
+        let code = editor.getValue();
         findBugs(code, (result) => {
           const editor = editors[index];
           for (const mark of editor.getAllMarks()) {
