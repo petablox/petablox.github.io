@@ -52,11 +52,16 @@ footer {
   cursor: pointer;
 }
 
-.run-example:hover {
+.run-example.disabled {
+  color: rgb(27, 160, 0);
+  cursor: not-allowed;
+}
+
+.run-example:not(.disabled):hover {
   background-color: rgba(0, 0, 0, 0.1);
 }
 
-.run-example:active {
+.run-example:not(.disabled):active {
   background-color: rgba(0, 0, 0, 0.2);
 }
 

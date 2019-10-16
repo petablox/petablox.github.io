@@ -107,6 +107,22 @@ function setup(editors) {
 }
 
 function findBugs(code, callback, final) {
+
+  // Change to this when tested
+  $.ajax({
+    url: "https://drake.cis.upenn.edu/hoppity/find_bug",
+    type: "post",
+    data: { code },
+    success: (result) => {
+      if ("code" in result) {
+        alert(result.msg);
+      } else {
+        callback(result.content);
+      }
+    },
+    complete: final
+  });
+
   // callback([{
   //   "op": "add_node",
   //   "loc": [{
@@ -135,21 +151,6 @@ function findBugs(code, callback, final) {
   //   "type": "LiteralNumericExpression",
   //   "ch_rank": 2
   // }]);
-
-  // Change to this when tested
-  $.ajax({
-    url: "https://drake.cis.upenn.edu/hoppity/find_bug",
-    type: "post",
-    data: { code },
-    success: (result) => {
-      if ("code" in result) {
-        alert(result.msg);
-      } else {
-        callback(result.content);
-      }
-    },
-    complete: final,
-  });
 }
 
 function main() {
