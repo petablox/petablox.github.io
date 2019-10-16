@@ -127,7 +127,7 @@ function setupFloatBox(hoverSelector, floatBoxSelector, text) {
     $(floatBoxSelector).fadeOut(100);
   });
 
-  $(hoverSelector).mouseover((event) => {
+  $(hoverSelector).mousemove((event) => {
     let x = event.pageX + offset[0];
     let y = event.pageY + offset[1];
     $(floatBoxSelector).css({
