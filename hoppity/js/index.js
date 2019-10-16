@@ -98,42 +98,42 @@ function setup(editors) {
 }
 
 function findBugs(code, callback) {
-  callback([{
-    "op": "add_node",
-    "loc": [{
-      "start": { "line": 0, "column": 0, "offset": 2116 },
-      "end": { "line": 0, "column": 3, "offset": 2140 }
-    }],
-    "value": "False",
-    "type": "LiteralBooleanExpression",
-    "ch_rank": 1
-  }, {
-    "op": "add_node",
-    "loc": [{
-      "start": { "line": 1, "column": 4, "offset": 2116 },
-      "end": { "line": 1, "column": 6, "offset": 2140 }
-    }],
-    "value": "True",
-    "type": "LiteralBooleanExpression",
-    "ch_rank": 1
-  }, {
-    "op": "add_node",
-    "loc": [{
-      "start": { "line": 2, "column": 7, "offset": 722 },
-      "end": { "line": 2, "column": 9, "offset": 745 }
-    }],
-    "value": "20",
-    "type": "LiteralNumericExpression",
-    "ch_rank": 2
-  }]);
+  // callback([{
+  //   "op": "add_node",
+  //   "loc": [{
+  //     "start": { "line": 0, "column": 0, "offset": 2116 },
+  //     "end": { "line": 0, "column": 3, "offset": 2140 }
+  //   }],
+  //   "value": "False",
+  //   "type": "LiteralBooleanExpression",
+  //   "ch_rank": 1
+  // }, {
+  //   "op": "add_node",
+  //   "loc": [{
+  //     "start": { "line": 1, "column": 4, "offset": 2116 },
+  //     "end": { "line": 1, "column": 6, "offset": 2140 }
+  //   }],
+  //   "value": "True",
+  //   "type": "LiteralBooleanExpression",
+  //   "ch_rank": 1
+  // }, {
+  //   "op": "add_node",
+  //   "loc": [{
+  //     "start": { "line": 2, "column": 7, "offset": 722 },
+  //     "end": { "line": 2, "column": 9, "offset": 745 }
+  //   }],
+  //   "value": "20",
+  //   "type": "LiteralNumericExpression",
+  //   "ch_rank": 2
+  // }]);
 
   // Change to this when tested
-  // $.ajax({
-  //   url: "https://drake.cis.upenn.edu/hoppity/find_bug",
-  //   type: "post",
-  //   data: { code },
-  //   success: callback,
-  // });
+  $.ajax({
+    url: "https://drake.cis.upenn.edu/hoppity/find_bug",
+    type: "post",
+    data: { code },
+    success: callback,
+  });
 }
 
 function main() {
