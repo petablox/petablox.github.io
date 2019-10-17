@@ -154,29 +154,42 @@ function getOperation(op) {
 }
 
 function setupFloatBox(hoverSelector, floatBoxSelector, result, index) {
-  const offset = [10, 10];
+  const offsetX = 10, offsetY = 10;
+  const height = 175;
+  const $hover = $(hoverSelector);
+  const $floatBox = $(floatBoxSelector);
 
-  $(floatBoxSelector).html(""); // Clear it
-  $(floatBoxSelector).append(renderSingleResult(result, index));
+  $floatBox.html(""); // Clear it
+  $floatBox.append(renderSingleResult(result, index));
 
   let is_in = false;
 
-  $(hoverSelector).hover(() => {
+  $hover.hover(() => {
     is_in = true;
-    $(floatBoxSelector).fadeIn(100);
+    $hover.addClass("excited");
+    $floatBox.fadeIn(100);
   }, () => {
     is_in = false;
+    $hover.removeClass("excited");
     setTimeout(() => {
-      if (!is_in) {
-        $(floatBoxSelector).fadeOut(100);
-      }
-    }, 10);
+      if (!is_in) $floatBox.fadeOut(100);
+    }, 200);
   });
 
-  $(hoverSelector).mousemove((event) => {
-    let x = event.pageX + offset[0];
-    let y = event.pageY + offset[1];
-    $(floatBoxSelector).css({
+  $hover.mousemove((event) => {
+    const $target = $(event.currentTarget);
+    let additionalY = 0;
+    let has1 = $target.hasClass("code-bug-mark-1");
+    let has2 = $target.hasClass("code-bug-mark-2");
+    if (index == 1 && has1) {
+      additionalY += height;
+    } else if (index == 2) {
+      if (has1) additionalY += height;
+      if (has2) additionalY += height;
+    }
+    let x = event.pageX + offsetX;
+    let y = event.pageY + offsetY + additionalY;
+    $floatBox.css({
       "left": x,
       "top": y,
     });

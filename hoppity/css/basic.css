@@ -78,15 +78,59 @@ footer {
 }
 
 .code-bug-mark-1 {
-  background-color: rgba(255, 30, 30, 0.2);
+  background-color: rgb(241, 203, 199);
+}
+
+.code-bug-mark-1.excited {
+  background-color: rgb(247, 198, 193);
 }
 
 .code-bug-mark-2 {
-  background-color: rgba(255, 113, 30, 0.2);
+  background-color: rgb(248, 229, 192);
+}
+
+.code-bug-mark-2.excited {
+  background-color: rgb(250, 226, 178);
 }
 
 .code-bug-mark-3 {
-  background-color: rgba(255, 195, 30, 0.2);
+  background-color: rgb(253, 254, 194);
+}
+
+.code-bug-mark-3.excited {
+  background-color: rgb(249, 250, 170);
+}
+
+.code-bug-mark-1.code-bug-mark-2 {
+  background-color: rgb(255, 205, 162);
+}
+
+.code-bug-mark-1.code-bug-mark-2.excited {
+  background-color: rgb(255, 191, 136);
+}
+
+.code-bug-mark-1.code-bug-mark-3 {
+  background-color: rgb(244, 216, 153);
+}
+
+.code-bug-mark-1.code-bug-mark-3.excited {
+  background-color: rgb(240, 206, 128);
+}
+
+.code-bug-mark-2.code-bug-mark-3 {
+  background-color: rgb(250, 236, 150);
+}
+
+.code-bug-mark-2.code-bug-mark-3.excited {
+  background-color: rgb(238, 221, 113);
+}
+
+.code-bug-mark-1.code-bug-mark-2.code-bug-mark-3 {
+  background-color: rgb(255, 218, 123);
+}
+
+.code-bug-mark-1.code-bug-mark-2.code-bug-mark-3.excited {
+  background-color: rgb(255, 210, 97);
 }
 
 .textarea-mask {
