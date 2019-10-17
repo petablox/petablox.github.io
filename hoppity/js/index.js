@@ -173,7 +173,7 @@ function setupFloatBox(hoverSelector, floatBoxSelector, result, index) {
     $hover.removeClass("excited");
     setTimeout(() => {
       if (!is_in) $floatBox.fadeOut(100);
-    }, 200);
+    }, 10);
   });
 
   $hover.mousemove((event) => {

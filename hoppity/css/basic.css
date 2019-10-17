@@ -156,6 +156,18 @@ footer {
   /* box-shadow: 0 0 10px rgba(0, 0, 0, 0.3); */
 }
 
+.float-box-1 h6 {
+  color: rgb(224, 76, 59);
+}
+
+.float-box-2 h6 {
+  color: rgb(184, 130, 23);
+}
+
+.float-box-3 h6 {
+  color: rgb(209, 191, 31);
+}
+
 .prediction {
   list-style: none;
   margin: 0;
