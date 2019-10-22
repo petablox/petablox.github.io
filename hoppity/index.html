@@ -36,86 +36,93 @@
         </div>
       </nav>
     </header>
-    <main role="main" class="flex-shrink-0" style="padding-top: 40px">
-      <div class="container">
-        <div class="row">
-          <div class="col col-7" style="padding-top: 20px">
-            <template id="prediction-template">
-              <div class="prediction-holder">
-                <h6><span class="number"></span> Prediction:</h6>
-                <hr />
-                <ul class="prediction">
-                  <li>Operation: <span class="operation"></span></li>
-                  <li>Value: <span class="value"></span></li>
-                  <li>Type: <span class="type"></span></li>
-                  <li>CH Rank: <span class="ch-rank"></span></li>
-                </ul>
-              </div>
-            </template>
-            <template id="code-example-template">
-              <div class="card code-holder">
-                <div class="card-body">
-                  <div class="card-title">
-                    <div class="title">
-                      Example
-                      <span class="example-id">1</span>
-                    </div>
-                    <div class="run-example">
-                      <span>Find Bug</span>
-                      <i class="fas fa-play"></i>
-                    </div>
+    <main role="main" class="flex-shrink-0">
+      <div class="row">
+        <div class="col col-8">
+          <template id="prediction-template">
+            <div class="prediction-holder">
+              <strong class="title"><span class="number"></span> Prediction:</strong>
+              <hr />
+              <ul class="prediction">
+                <li>Operation: <span class="operation"></span></li>
+                <li>Value: <span class="value"></span></li>
+                <li>Type: <span class="type"></span></li>
+                <li>CH Rank: <span class="ch-rank"></span></li>
+              </ul>
+            </div>
+          </template>
+          <template id="code-example-template">
+            <div class="card code-holder">
+              <div class="card-body">
+                <div class="card-title">
+                  <div class="title">
+                    Example
+                    <span class="example-id">1</span>
                   </div>
+                  <div class="run-example">
+                    <span>Find Bug</span>
+                    <i class="fas fa-play"></i>
+                  </div>
+                </div>
+                <div class="example-body">
                   <div class="textarea-holder">
                     <textarea class="code-container"></textarea>
                     <div class="floating-boxes">
-                      <div class="float-box float-box-1" style="display: none"></div>
-                      <div class="float-box float-box-2" style="display: none"></div>
-                      <div class="float-box float-box-3" style="display: none"></div>
-                    </div>
-                    <div class="textarea-mask" style="display: none">
-                      <img src="img/puff.svg" />
+                      <div class="float-box float-box-1 level-1" style="display: none"></div>
+                      <div class="float-box float-box-2 level-2" style="display: none"></div>
+                      <div class="float-box float-box-3 level-3" style="display: none"></div>
                     </div>
                   </div>
+                  <div class="result-holder">
+                    <ul class="result-list">
+                      <li class="result-list-item-1 level-1"></li>
+                      <li class="result-list-item-2 level-2"></li>
+                      <li class="result-list-item-3 level-3"></li>
+                    </ul>
+                  </div>
+                </div>
+                <div class="example-mask" style="display: none">
+                  <img src="img/puff.svg" />
                 </div>
               </div>
-            </template>
-            <div id="code-examples">
-              <!-- Examples goes here -->
             </div>
-            <div style="margin-top: 10px; text-align: center; color: rgba(0, 0, 0, 0.6)">
-              (Feel free to change any of them and hit the "Find Bug" button)
-            </div>
+          </template>
+          <div id="code-examples">
+            <!-- Examples goes here -->
           </div>
-          <div class="col col-5">
-            <h2 class="mt-5">Unveil hidden bugs in JavaScript like no other</h2>
-            <p class="lead">
-              What other static analyzers cannot tell, we can.
-            </p>
-            <p>
-              To aid Javascript developers, researchers in programming languages have
-              built static analyzers for detecting common coding errors in Javascript.
-              But it's nevertheless a very hard task. As a dynamically typed language
-              JavaScript possesses the flexibility but also the potential to fail.
-              Uncommon bugs are scattered out there in the wild with no tool catching
-              them.
-            </p>
-            <p>
-              Existing tools like Eslint and TAJS while presenting lots of false
-              positives and negatives, also often requires you to have a
-              sophisticated software structure for them to do analyze. Furthermore,
-              they might get wrong with the library informations.
-            </p>
-            <p>
-              Our Deepcheck tool is trained by the real world bug fixes. It will
-              identify the hidden bugs in your code just like any human reader, and
-              provide you an option of fixing it.
-            </p>
-            <p>
-              In the future, this tool will be integrated to your everyday-editors
-              and help you as you type! Deepcheck is an intelligent companion who is
-              able to sense any tiny flaws in your code.
-            </p>
+          <div style="margin-top: 10px; text-align: center; color: rgba(0, 0, 0, 0.6)">
+            (Feel free to change any of them and hit the "Find Bug" button)
           </div>
+        </div>
+        <div class="col col-4">
+          <h2 class="mt-5">Unveil hidden bugs in JavaScript like no other</h2>
+          <p class="lead">
+            What other static analyzers cannot tell, we can.
+          </p>
+          <p>
+            To aid Javascript developers, researchers in programming languages have
+            built static analyzers for detecting common coding errors in Javascript.
+            But it's nevertheless a very hard task. As a dynamically typed language
+            JavaScript possesses the flexibility but also the potential to fail.
+            Uncommon bugs are scattered out there in the wild with no tool catching
+            them.
+          </p>
+          <p>
+            Existing tools like Eslint and TAJS while presenting lots of false
+            positives and negatives, also often requires you to have a
+            sophisticated software structure for them to do analyze. Furthermore,
+            they might get wrong with the library informations.
+          </p>
+          <p>
+            Our Deepcheck tool is trained by the real world bug fixes. It will
+            identify the hidden bugs in your code just like any human reader, and
+            provide you an option of fixing it.
+          </p>
+          <p>
+            In the future, this tool will be integrated to your everyday-editors
+            and help you as you type! Deepcheck is an intelligent companion who is
+            able to sense any tiny flaws in your code.
+          </p>
         </div>
       </div>
     </main>

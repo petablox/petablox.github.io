@@ -1,12 +1,14 @@
 * {
-  font-family: 'Courier New', Courier, monospace;
+  /* font-family: 'Courier New', Courier, monospace; */
   font-size: 14px;
 }
 
+main {
+  padding: 60px;
+}
+
 footer {
-  position: absolute;
   width: 100vw;
-  bottom: 0;
 }
 
 .code-holder:first-of-type {
@@ -35,7 +37,7 @@ footer {
   background-color: rgba(0, 0, 0, 0.1);
 }
 
-.title {
+.card-title > .title {
   flex: 1;
   line-height: 40px;
   padding: 0 10px;
@@ -65,64 +67,90 @@ footer {
   background-color: rgba(0, 0, 0, 0.2);
 }
 
-.textarea-holder {
+.example-body {
   border-top: 1px solid rgba(0, 0, 0, 0.125);
+  display: flex;
+}
+
+.textarea-holder {
+  flex-grow: 1;
 }
 
 .CodeMirror {
-  height: 400px !important;
+  transition: all 0.2s;
+  min-height: 400px;
+  height: 100% !important;
 }
 
-.code-bug-mark {
+/* .code-bug-mark {
   background-color: rgba(255, 30, 30, 0.2);
-}
+} */
 
 .code-bug-mark-1 {
-  background-color: rgb(255, 222, 218);
+  background-color: rgba(255, 0, 0, 0.1);
 }
 
 .code-bug-mark-1.excited {
-  background-color: rgb(255, 210, 205);
+  background-color: rgba(255, 0, 0, 0.15);
+  border-left: 1px solid rgba(200, 0, 0, 1);
+  border-top: 1px solid rgba(200, 0, 0, 1);
+  border-bottom: 1px solid rgba(200, 0, 0, 1);
+}
+
+.code-bug-mark-1.excited + .code-bug-mark-1.excited {
+  border-left: none;
+}
+
+.code-bug-mark-1.excited:last-of-type {
+  border-right: 1px solid rgba(200, 0, 0, 1);
+}
+
+.code-bug-mark-1.excited + span:not(.code-bug-mark-1.excited) {
+  border-left: 1px solid rgba(200, 0, 0, 1);
 }
 
 .code-bug-mark-2 {
-  background-color: rgb(255, 231, 184);
+  background-color: rgba(255, 150, 0, 0.3);
 }
 
 .code-bug-mark-2.excited {
-  background-color: rgb(255, 225, 166);
+  background-color: rgba(255, 150, 0, 0.4);
+  border-left: 1px solid rgba(200, 100, 0, 1);
+  border-top: 1px solid rgba(200, 100, 0, 1);
+  border-bottom: 1px solid rgba(200, 100, 0, 1);
 }
 
 .code-bug-mark-3 {
-  background-color: rgb(255, 247, 176);
+  background-color: rgba(255, 255, 0, 0.4);
 }
 
 .code-bug-mark-3.excited {
-  background-color: rgb(255, 249, 164);
+  background-color: rgba(255, 255, 0, 0.7);
+  border: 1px solid rgba(200, 200, 0, 1);
 }
 
 .code-bug-mark-1.code-bug-mark-2 {
-  background-color: rgb(255, 209, 169);
+  background-color: rgba(255, 145, 0, 0.25);
 }
 
 .code-bug-mark-1.code-bug-mark-2.excited {
-  background-color: rgb(255, 195, 143);
+  background-color: rgba(255, 145, 0, 0.35);
 }
 
 .code-bug-mark-1.code-bug-mark-3 {
-  background-color: rgb(255, 228, 164);
+  background-color: rgba(255, 255, 0, 0.5);
 }
 
 .code-bug-mark-1.code-bug-mark-3.excited {
-  background-color: rgb(255, 224, 153);
+  background-color: rgba(255, 255, 0, 0.3);
 }
 
 .code-bug-mark-2.code-bug-mark-3 {
-  background-color: rgb(255, 242, 159);
+  background-color: rgba(127, 255, 0, 0.25);
 }
 
 .code-bug-mark-2.code-bug-mark-3.excited {
-  background-color: rgb(255, 239, 136);
+  background-color: rgba(127, 255, 0, 0.7);
 }
 
 .code-bug-mark-1.code-bug-mark-2.code-bug-mark-3 {
@@ -133,7 +161,7 @@ footer {
   background-color: rgb(255, 216, 116);
 }
 
-.textarea-mask {
+.example-mask {
   z-index: 20;
   position: relative;
   height: 400px;
@@ -156,16 +184,19 @@ footer {
   /* box-shadow: 0 0 10px rgba(0, 0, 0, 0.3); */
 }
 
-.float-box-1 h6 {
-  color: rgb(224, 76, 59);
+.level-1 .title {
+  color: red;
+  /* text-shadow: 0 0 3px rgba(0, 0, 0, 0.5); */
 }
 
-.float-box-2 h6 {
-  color: rgb(184, 130, 23);
+.level-2 .title {
+  color: orange;
+  /* text-shadow: 0 0 3px rgba(0, 0, 0, 0.5); */
 }
 
-.float-box-3 h6 {
-  color: rgb(209, 191, 31);
+.level-3 .title {
+  color: rgb(202, 189, 0);
+  /* text-shadow: 0 0 3px rgba(0, 0, 0, 0.5); */
 }
 
 .prediction {
@@ -176,4 +207,58 @@ footer {
 
 .CodeMirror-gutters {
   background-color: white !important;
+}
+
+.prediction-holder hr {
+  margin: 5px 0;
+}
+
+.result-holder {
+  transition: all 0.2s;
+  overflow: hidden;
+  width: 0;
+}
+
+.result-holder.active {
+  width: 250px;
+}
+
+.result-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  height: 100%;
+  border-left: 1px solid rgba(0, 0, 0, 0.125);
+  width: 250px;
+}
+
+.result-list > li {
+  transition: all 0.2s;
+  border-left: 2px solid rgba(0, 0, 0, 0.125);
+  padding: 12px;
+  cursor: pointer;
+}
+
+.result-list > li + li {
+  border-top: 1px solid rgba(0, 0, 0, 0.125);
+}
+
+.result-list > li:hover {
+  background-color: rgba(0, 0, 0, 0.05);
+}
+
+.result-list > li:active {
+  background-color: rgba(0, 0, 0, 0.1);
+}
+
+.result-list > li:nth-child(1) {
+  border-left: 2px solid red;
+}
+
+.result-list > li:nth-child(2) {
+  border-left: 2px solid orange;
+}
+
+.result-list > li:nth-child(3) {
+  border-left: 2px solid yellow;
 }

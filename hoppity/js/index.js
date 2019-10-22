@@ -33,16 +33,12 @@ function loadExamples(examples, callback) {
               const editor = CodeMirror.fromTextArea(textarea, {
                 mode: "javascript",
                 lineNumbers: true,
+                autofocus: index === 0,
               });
               editors[index] = editor;
-              for (const { from, to } of bugs) {
-                editor.markText(
-                  { line: from.line, ch: from.ch },
-                  { line: to.line, ch: to.ch },
-                  { className: "code-bug-mark" },
-                );
-              }
-              loop(index + 1);
+              // processResult(bugs, editor, index, () => {
+                loop(index + 1);
+              // });
             }
           });
         }
@@ -53,6 +49,10 @@ function loadExamples(examples, callback) {
   })(0);
 }
 
+function showResultList($resultHolder) {
+  $resultHolder.addClass("active");
+}
+
 function setup(editors) {
   $(".card").each((index, elem) => {
     $(elem).attr("id", `editor-card-${index}`);
@@ -61,30 +61,39 @@ function setup(editors) {
   $(".card:first-child").addClass("show");
 
   $(".card:not(.show)").each((_, elem) => {
-    $(elem).children().children(".textarea-holder").slideUp(0);
+    $(elem).children().children(".example-body").slideUp(0);
   });
 
   $(".card-title").click((event) => {
     const $card = $(event.currentTarget).parent().parent();
     if (!$card.hasClass("show")) {
       $card.addClass("show");
-      $card.children().children(".textarea-holder").slideDown(200);
+      $card.children().children(".example-body").slideDown(200);
       $card.siblings(".show").each((index, elem) => {
         $(elem).removeClass("show");
-        $(elem).children().children(".textarea-holder").slideUp(200);
+        $(elem).children().children(".example-body").slideUp(200);
       });
     }
   });
 
   $(".run-example").each((index, elem) => {
+    let $cardBody = $(elem).parent().parent();
+    let $exampleBody = $cardBody.find(".example-body");
+    let $exampleMask = $cardBody.find(".example-mask");
+    let $resultHolder = $cardBody.find(".result-holder");
+
     function onStart() {
       $(elem).addClass("disabled");
-      $(elem).parent().parent().find(".textarea-mask").fadeIn(200);
+      $exampleMask.css({
+        "height": `${$exampleBody.height()}px`,
+        "margin-top": `-${$exampleBody.height()}px`,
+      }).fadeIn(200);
+      $resultHolder.removeClass("active");
     }
 
     function onEnd() {
       $(elem).removeClass("disabled");
-      $(elem).parent().parent().find(".textarea-mask").fadeOut(200);
+      $cardBody.find(".example-mask").fadeOut(200);
     }
 
     $(elem).click(() => {
@@ -93,36 +102,43 @@ function setup(editors) {
         onStart();
         let code = editor.getValue();
         findBugs(code, (result) => {
-          const editor = editors[index];
-          for (const mark of editor.getAllMarks()) {
-            mark.clear();
-          }
-          let level = 0;
-          for (const { loc } of result) {
-            level += 1;
-            for (const { start, end } of loc) {
-              editor.markText(
-                { line: start.line - 1, ch: start.column },
-                { line: end.line - 1, ch: end.column },
-                { className: `code-bug-mark-${level}` },
-              );
-            }
-          }
-          setTimeout(() => {
-            for (let i = 0; i < result.length; i++) {
-              const level = i + 1;
-              setupFloatBox(
-                `#editor-card-${index} .code-bug-mark-${level}`,
-                `#editor-card-${index} .float-box-${level}`,
-                result[i],
-                i
-              );
-            }
-          }, 500);
+          processResult(result, editors[index], index, () => {
+            showResultList($resultHolder);
+          });
         }, onEnd);
       }
     });
   });
+}
+
+function processResult(result, editor, index, callback) {
+  for (const mark of editor.getAllMarks()) {
+    mark.clear();
+  }
+  let level = 0;
+  for (const { loc } of result) {
+    level += 1;
+    for (const { start, end } of loc) {
+      editor.markText(
+        { line: start.line - 1, ch: start.column },
+        { line: end.line - 1, ch: end.column },
+        { className: `code-bug-mark-${level}` },
+      );
+    }
+  }
+  setTimeout(() => {
+    for (let i = 0; i < result.length; i++) {
+      const level = i + 1;
+      setupResult(
+        `#editor-card-${index} .code-bug-mark-${level}`,
+        `#editor-card-${index} .float-box-${level}`,
+        `#editor-card-${index} .result-list-item-${level}`,
+        result[i],
+        i
+      );
+    }
+    callback();
+  }, 100);
 }
 
 function renderSingleResult(result, index) {
@@ -153,16 +169,26 @@ function getOperation(op) {
   }
 }
 
-function setupFloatBox(hoverSelector, floatBoxSelector, result, index) {
+function setupResult(hoverSelector, floatBoxSelector, resultListItemSelector, result, index) {
   const offsetX = 10, offsetY = 10;
-  const height = 175;
+  const height = 155;
   const $hover = $(hoverSelector);
   const $floatBox = $(floatBoxSelector);
+  const $resultListItem = $(resultListItemSelector);
 
   $floatBox.html(""); // Clear it
   $floatBox.append(renderSingleResult(result, index));
 
+  $resultListItem.html("");
+  $resultListItem.append(renderSingleResult(result, index));
+
   let is_in = false;
+
+  $resultListItem.hover(() => {
+    $hover.addClass("excited");
+  }, () => {
+    $hover.removeClass("excited");
+  });
 
   $hover.hover(() => {
     is_in = true;

@@ -1,10 +1,10 @@
 [
   {
-    "from": { "line": 4, "ch": 41 },
-    "to": { "line": 4, "ch": 42 }
-  },
-  {
-    "from": { "line": 4, "ch": 55 },
-    "to": { "line": 4, "ch": 56 }
+    "loc": [
+      {
+        "start": { "line": 4, "column": 33 },
+        "end": { "line": 4, "column": 42 }
+      }
+    ]
   }
 ]

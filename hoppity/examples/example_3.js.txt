@@ -1,6 +1,9 @@
-grunt.initConfig({
-  execute: { ... }, copy: { ... }, checktextdomain: { ... },
-  wp_read_me_to_markdown: { ... }, makepot: { ... }
-});
-// In the following line, `copy` should also be included
-grunt.registerTask('default', ['execute', 'checktextdomain', ...])
+function example() {
+  if (matches) {
+    return {
+      // should omit the parenthesis     v here and    v here
+      hosts: matches.groups.hosts.split(/([,&]+|\sand\s)/).
+        map(e1 => S(e1).trim().s)
+    };
+  }
+}
