@@ -19,28 +19,45 @@ function loadExamples(examples, callback) {
         type: "get",
         contentType: "text/plain",
         success: (result) => {
-          $.ajax({
-            url: bugs,
-            type: "get",
-            contentType: "text/plain",
-            success: (bugs) => {
-              const clone = document.importNode(template.content, true);
-              const textarea = clone.querySelector("textarea");
-              const id = clone.querySelector(".example-id");
-              id.innerHTML = (index + 1);
-              textarea.value = result;
-              target.appendChild(clone);
-              const editor = CodeMirror.fromTextArea(textarea, {
-                mode: "javascript",
-                lineNumbers: true,
-                autofocus: index === 0,
-              });
-              editors[index] = editor;
-              // processResult(bugs, editor, index, () => {
-                loop(index + 1);
-              // });
-            }
+
+          const clone = document.importNode(template.content, true);
+          const textarea = clone.querySelector("textarea");
+          const id = clone.querySelector(".example-id");
+          id.innerHTML = (index + 1);
+          textarea.value = result;
+          target.appendChild(clone);
+          const editor = CodeMirror.fromTextArea(textarea, {
+            mode: "javascript",
+            lineNumbers: true,
+            lineWrapping: true,
+            autofocus: index === 0,
           });
+          editors[index] = editor;
+          loop(index + 1);
+
+          // Let's not get bugs for now
+          // $.ajax({
+          //   url: bugs,
+          //   type: "get",
+          //   contentType: "text/plain",
+          //   success: (bugs) => {
+          //     const clone = document.importNode(template.content, true);
+          //     const textarea = clone.querySelector("textarea");
+          //     const id = clone.querySelector(".example-id");
+          //     id.innerHTML = (index + 1);
+          //     textarea.value = result;
+          //     target.appendChild(clone);
+          //     const editor = CodeMirror.fromTextArea(textarea, {
+          //       mode: "javascript",
+          //       lineNumbers: true,
+          //       autofocus: index === 0,
+          //     });
+          //     editors[index] = editor;
+          //     // processResult(bugs, editor, index, () => {
+          //       loop(index + 1);
+          //     // });
+          //   }
+          // });
         }
       });
     } else {
@@ -170,7 +187,7 @@ function getOperation(op) {
 }
 
 function setupResult(hoverSelector, floatBoxSelector, resultListItemSelector, result, index) {
-  const offsetX = 10, offsetY = 10;
+  const offsetX = -15, offsetY = -110;
   const height = 155;
   const $hover = $(hoverSelector);
   const $floatBox = $(floatBoxSelector);
@@ -185,18 +202,18 @@ function setupResult(hoverSelector, floatBoxSelector, resultListItemSelector, re
   let is_in = false;
 
   $resultListItem.hover(() => {
-    $hover.addClass("excited");
+    $(hoverSelector).addClass("excited");
   }, () => {
-    $hover.removeClass("excited");
+    $(hoverSelector).removeClass("excited");
   });
 
   $hover.hover(() => {
     is_in = true;
-    $hover.addClass("excited");
+    $(hoverSelector).addClass("excited");
     $floatBox.fadeIn(100);
   }, () => {
     is_in = false;
-    $hover.removeClass("excited");
+    $(hoverSelector).removeClass("excited");
     setTimeout(() => {
       if (!is_in) $floatBox.fadeOut(100);
     }, 10);
@@ -213,8 +230,8 @@ function setupResult(hoverSelector, floatBoxSelector, resultListItemSelector, re
       if (has1) additionalY += height;
       if (has2) additionalY += height;
     }
-    let x = event.pageX + offsetX;
-    let y = event.pageY + offsetY + additionalY;
+    let x = event.screenX + offsetX;
+    let y = event.screenY + offsetY + additionalY;
     $floatBox.css({
       "left": x,
       "top": y,

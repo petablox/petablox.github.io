@@ -67,6 +67,11 @@ footer {
   background-color: rgba(0, 0, 0, 0.2);
 }
 
+.run-example i {
+  display: inline-block;
+  margin-left: 10px;
+}
+
 .example-body {
   border-top: 1px solid rgba(0, 0, 0, 0.125);
   display: flex;
@@ -105,19 +110,19 @@ footer {
   border-right: 1px solid rgba(200, 0, 0, 1);
 }
 
-.code-bug-mark-1.excited + span:not(.code-bug-mark-1.excited) {
-  border-left: 1px solid rgba(200, 0, 0, 1);
-}
-
 .code-bug-mark-2 {
   background-color: rgba(255, 150, 0, 0.3);
 }
 
 .code-bug-mark-2.excited {
   background-color: rgba(255, 150, 0, 0.4);
-  border-left: 1px solid rgba(200, 100, 0, 1);
-  border-top: 1px solid rgba(200, 100, 0, 1);
-  border-bottom: 1px solid rgba(200, 100, 0, 1);
+  border-left: 1px solid rgba(200, 130, 0, 1);
+  border-top: 1px solid rgba(200, 130, 0, 1);
+  border-bottom: 1px solid rgba(200, 130, 0, 1);
+}
+
+.code-bug-mark-2.excited:last-of-type {
+  border-right: 1px solid rgba(200, 130, 0, 1);
 }
 
 .code-bug-mark-3 {
@@ -126,7 +131,13 @@ footer {
 
 .code-bug-mark-3.excited {
   background-color: rgba(255, 255, 0, 0.7);
-  border: 1px solid rgba(200, 200, 0, 1);
+  border-left: 1px solid rgb(200, 150, 0);
+  border-top: 1px solid rgb(200, 150, 0);
+  border-bottom: 1px solid rgb(200, 150, 0);
+}
+
+.code-bug-mark-3.excited:last-of-type {
+  border-right: 1px solid rgb(200, 150, 0);
 }
 
 .code-bug-mark-1.code-bug-mark-2 {
@@ -215,6 +226,7 @@ footer {
 
 .result-holder {
   transition: all 0.2s;
+  flex-shrink: 0;
   overflow: hidden;
   width: 0;
 }
