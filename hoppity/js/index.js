@@ -31,6 +31,7 @@ function loadExamples(examples, callback) {
             lineNumbers: true,
             lineWrapping: true,
             autofocus: index === 0,
+            // viewportMargin: 100,
           });
           editors[index] = editor;
           loop(index + 1);
@@ -106,6 +107,11 @@ function setup(editors) {
         "margin-top": `-${$exampleBody.height()}px`,
       }).fadeIn(200);
       $resultHolder.removeClass("active");
+
+      // Turn off the listener
+      for (let level = 1; level <= 3; level++) {
+        $("body").off("mouseenter mouseleave mousemove", `#editor-card-${index} .code-bug-mark-${level}`);
+      }
     }
 
     function onEnd() {
@@ -139,7 +145,11 @@ function processResult(result, editor, index, callback) {
       editor.markText(
         { line: start.line - 1, ch: start.column },
         { line: end.line - 1, ch: end.column },
-        { className: `code-bug-mark-${level}` },
+        {
+          className: `code-bug-mark-${level}`,
+          startStyle: `left`,
+          endStyle: `right`,
+        },
       );
     }
   }
@@ -148,6 +158,7 @@ function processResult(result, editor, index, callback) {
       const level = i + 1;
       setupResult(
         `#editor-card-${index} .code-bug-mark-${level}`,
+        `#editor-card-${index} .CodeMirror-scroll`,
         `#editor-card-${index} .float-box-${level}`,
         `#editor-card-${index} .result-list-item-${level}`,
         result[i],
@@ -186,10 +197,9 @@ function getOperation(op) {
   }
 }
 
-function setupResult(hoverSelector, floatBoxSelector, resultListItemSelector, result, index) {
+function setupResult(hoverSelector, scrollSelector, floatBoxSelector, resultListItemSelector, result, index) {
   const offsetX = -15, offsetY = -110;
   const height = 155;
-  const $hover = $(hoverSelector);
   const $floatBox = $(floatBoxSelector);
   const $resultListItem = $(resultListItemSelector);
 
@@ -200,26 +210,45 @@ function setupResult(hoverSelector, floatBoxSelector, resultListItemSelector, re
   $resultListItem.append(renderSingleResult(result, index));
 
   let is_in = false;
+  let is_in_result_list_item = false;
+
+  // First clear all the handlers
+  $resultListItem.off("mouseenter mouseleave click");
 
   $resultListItem.hover(() => {
+    is_in_result_list_item = true;
     $(hoverSelector).addClass("excited");
   }, () => {
+    is_in_result_list_item = false;
     $(hoverSelector).removeClass("excited");
   });
 
-  $hover.hover(() => {
+  $resultListItem.click(() => {
+    let lineHeight = $(".CodeMirror-code").children().eq(0).outerHeight();
+    let scrollTop = (result["loc"][0]["start"]["line"] - 1) * lineHeight;
+    console.log(`Scroll to ${scrollTop}`);
+    $(scrollSelector).animate({ scrollTop }, () => {
+      if (is_in_result_list_item) {
+        $(hoverSelector).addClass("excited");
+      }
+    });
+  });
+
+  $("body").on("mouseenter", hoverSelector, () => {
     is_in = true;
     $(hoverSelector).addClass("excited");
     $floatBox.fadeIn(100);
-  }, () => {
+  });
+
+  $("body").on("mouseleave", hoverSelector, () => {
     is_in = false;
     $(hoverSelector).removeClass("excited");
     setTimeout(() => {
       if (!is_in) $floatBox.fadeOut(100);
     }, 10);
-  });
+  })
 
-  $hover.mousemove((event) => {
+  $("body").on("mousemove", hoverSelector, () => {
     const $target = $(event.currentTarget);
     let additionalY = 0;
     let has1 = $target.hasClass("code-bug-mark-1");
@@ -237,6 +266,22 @@ function setupResult(hoverSelector, floatBoxSelector, resultListItemSelector, re
       "top": y,
     });
   });
+
+  // function setupHover() {
+  //   const $hover = $(hoverSelector);
+
+  //   $hover.hover(() => {
+
+  //   }, () => {
+
+  //   });
+
+  //   $hover.mousemove((event) => {
+
+  //   });
+  // }
+
+  // setupHover();
 }
 
 function findBugs(code, callback, final) {

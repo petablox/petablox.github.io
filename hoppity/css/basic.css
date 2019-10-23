@@ -85,6 +85,7 @@ footer {
   transition: all 0.2s;
   min-height: 400px;
   height: 100% !important;
+  max-height: 500px;
 }
 
 /* .code-bug-mark {
@@ -97,16 +98,15 @@ footer {
 
 .code-bug-mark-1.excited {
   background-color: rgba(255, 0, 0, 0.15);
-  border-left: 1px solid rgba(200, 0, 0, 1);
   border-top: 1px solid rgba(200, 0, 0, 1);
   border-bottom: 1px solid rgba(200, 0, 0, 1);
 }
 
-.code-bug-mark-1.excited + .code-bug-mark-1.excited {
-  border-left: none;
+.code-bug-mark-1.left.excited, .code-bug-mark-1:first-of-type.excited {
+  border-left: 1px solid rgba(200, 0, 0, 1);
 }
 
-.code-bug-mark-1.excited:last-of-type {
+.code-bug-mark-1.right.excited, .code-bug-mark-1:last-of-type.excited {
   border-right: 1px solid rgba(200, 0, 0, 1);
 }
 
@@ -116,12 +116,15 @@ footer {
 
 .code-bug-mark-2.excited {
   background-color: rgba(255, 150, 0, 0.4);
-  border-left: 1px solid rgba(200, 130, 0, 1);
   border-top: 1px solid rgba(200, 130, 0, 1);
   border-bottom: 1px solid rgba(200, 130, 0, 1);
 }
 
-.code-bug-mark-2.excited:last-of-type {
+.code-bug-mark-2.left.excited, .code-bug-mark-2:first-of-type.excited {
+  border-left: 1px solid rgba(200, 130, 0, 1);
+}
+
+.code-bug-mark-2.right.excited, .code-bug-mark-2:last-of-type.excited {
   border-right: 1px solid rgba(200, 130, 0, 1);
 }
 
@@ -131,12 +134,15 @@ footer {
 
 .code-bug-mark-3.excited {
   background-color: rgba(255, 255, 0, 0.7);
-  border-left: 1px solid rgb(200, 150, 0);
   border-top: 1px solid rgb(200, 150, 0);
   border-bottom: 1px solid rgb(200, 150, 0);
 }
 
-.code-bug-mark-3.excited:last-of-type {
+.code-bug-mark-3.left.excited, .code-bug-mark-3:first-of-type.excited {
+  border-left: 1px solid rgb(200, 150, 0);
+}
+
+.code-bug-mark-3.right.excited, .code-bug-mark-3:last-of-type.excited {
   border-right: 1px solid rgb(200, 150, 0);
 }
 
