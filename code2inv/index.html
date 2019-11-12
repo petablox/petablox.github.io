@@ -7,9 +7,10 @@
     <script src="vendor/codemirror/lib/codemirror.js"></script>
     <link rel="stylesheet" href="vendor/codemirror/lib/codemirror.css">
     <script src="vendor/codemirror/mode/clike/clike.js"></script>
+    <script src="vendor/codemirror/addon/display/autorefresh.js"></script>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <script src="https://kit.fontawesome.com/51df9fae3c.js" crossorigin="anonymous"></script>
-    <title>Hoppity - Petablox</title>
+    <title>Code2Inv - Petablox</title>
   </head>
   <body>
     <header>
@@ -43,38 +44,129 @@
       <main role="main" class="flex-shrink-0">
         <div class="row">
           <div class="col col-7">
-            <div class="card">
-              <div class="card-title holder">
-                <h4>Example</h4>
-              </div>
-              <div class="card-body">
-                <div class="code-holder">
-                  <textarea class="example-code" id="example-code">
+            <ul class="nav nav-tabs" role="tablist">
+              <li class="nav-item">
+                <a class="nav-link active" data-toggle="tab" role="tab" href="#example-1">Example 1</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" data-toggle="tab" role="tab" href="#example-2">Example 2</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" data-toggle="tab" role="tab" href="#example-3">Example 3</a>
+              </li>
+            </ul>
+            <div class="tab-content" id="myTabContent">
+              <div class="tab-pane fade show active" id="example-1" role="tabpanel" aria-labelledby="example-1-tab">
+                <div class="card example-card">
+                  <div class="card-body">
+                    <div class="code-holder">
+                      <textarea class="example-code" id="example-code-1">
 int main() {
-    int x = 1;
-    int m = 1;
-    int n;
+  int x = 1;
+  int m = 1;
+  int n;
 
-    while (x < n) {
-        if (unknown()) {
-            m = x;
-        }
-        x = x + 1;
+  while (x < n) {
+    if (unknown()) {
+      m = x;
     }
+    x = x + 1;
+  }
 
-    if (n > 1) {
-        assert (m < n);
-        // assert (m >= 1);
-    }
+  if (n > 1) {
+    assert(m < n);
+  }
 }
-                  </textarea>
+                      </textarea>
+                    </div>
+                    <div>
+                      <div class="run-button disabled">
+                        Find Invariant
+                        <i class="fa fa-play"></i>
+                      </div>
+                    </div>
+                    <div class="holder result">
+                      <h5>Result Invariant:</h5>
+                      <div class="code example-clauses">
+                        ((x <= 1 + 1) || (x > 1 + 1)) && <br />
+                        ((n > 1) || (x > 1 - 1)) && <br />
+                        ((n <= 1) || (n >= 1 + m))
+                      </div>
+                    </div>
+                  </div>
                 </div>
-                <div class="holder">
-                  <h4>Result Invariant:</h4>
-                  <div class="code example-clauses">
-                    ((x <= 1 + 1) || (x > 1 + 1)) && <br />
-                    ((n > 1) || (x > 1 - 1)) && <br />
-                    ((n <= 1) || (n >= 1 + m))
+              </div>
+              <div class="tab-pane fade" id="example-2" role="tabpanel" aria-labelledby="example-2-tab">
+                <div class="card example-card">
+                  <div class="card-body">
+                    <div class="code-holder">
+                      <textarea class="example-code" id="example-code-2">
+int main() {
+  int n;
+  int x;
+  // pre-conditions
+  assume(x = 0);
+  // loop body
+  while (x < n) {
+    x = (x + 1);
+  }
+  // post-condition
+  if (x != n) {
+    assert(n < 0);
+  }
+}
+                      </textarea>
+                    </div>
+                    <div>
+                      <div class="run-button disabled">
+                        Find Invariant
+                        <i class="fa fa-play"></i>
+                      </div>
+                    </div>
+                    <div class="holder result">
+                      <h5>Result Invariant:</h5>
+                      <div class="code example-clauses">
+                        (n > x - 1) || (x < x - n)
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="tab-pane fade" id="example-3" role="tabpanel" aria-labelledby="example-3-tab">
+                <div class="card example-card">
+                  <div class="card-body">
+                    <div class="code-holder">
+                      <textarea class="example-code" id="example-code-3">
+int main() {
+  int n;
+  int x;
+  // pre-conditions
+  assume(x = 0);
+  // loop body
+  while (x < n) {
+    x = (x + 1);
+  }
+  // post-condition
+  if (x >= 0) {
+    assert(x == n);
+  }
+}
+                      </textarea>
+                    </div>
+                    <div>
+                      <div class="run-button disabled">
+                        Find Invariant
+                        <i class="fa fa-play"></i>
+                      </div>
+                    </div>
+                    <div class="holder result">
+                      <h5>Result Invariant:</h5>
+                      <div class="code example-clauses">
+                          ((n < 0) || (n >= 0 - 0)) && <br />
+                          ((n > 0 - 1) || (n <= 0)) && <br />
+                          ((n < 0) || (n >= x))
+                      </div>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -94,6 +186,10 @@ int main() {
               that constructs the solution by multi-step decision making and querying an external program graph
               memory block. By training with reinforcement learning, CODE2INV captures rich program features and
               avoids the need for ground truth solutions as supervision.
+            </p>
+            <p>
+              Check out the examples on the left, and modify the code to see what other loop invariants could we
+              find!
             </p>
           </div>
         </div>

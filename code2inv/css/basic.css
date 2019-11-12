@@ -16,7 +16,7 @@ footer {
   margin: 0 !important;
 }
 
-.card-title h4 {
+.card-title h5 {
   margin: 0;
 }
 
@@ -32,6 +32,39 @@ footer {
   padding: 15px;
 }
 
+.result {
+  border-top: 1px solid rgba(0, 0, 0, 0.125);
+}
+
 .code {
   font-family: monospace;
+}
+
+.example-card {
+  margin-top: 15px;
+}
+
+.run-button {
+  transition: all 0.2s;
+  text-align: center;
+  color: rgb(27, 160, 0);
+  line-height: 40px;
+  cursor: pointer;
+}
+
+.run-button:hover {
+  background-color: rgba(0, 0, 0, 0.05);
+}
+
+.run-button:active {
+  background-color: rgba(0, 0, 0, 0.075);
+}
+
+.run-button.disabled {
+  cursor: not-allowed;
+  color: rgba(0, 0, 0, 0.125);
+}
+
+.CodeMirror {
+  width: 100%;
 }
