@@ -65,14 +65,15 @@ int main() {
   int x = 1;
   int m = 1;
   int n;
-
+  // no pre-conditions
+  // loop body
   while (x < n) {
     if (unknown()) {
       m = x;
     }
     x = x + 1;
   }
-
+  // post-conditions
   if (n > 1) {
     assert(m < n);
   }
@@ -92,6 +93,17 @@ int main() {
                         ((n > 1) || (x > 1 - 1)) && <br />
                         ((n <= 1) || (n >= 1 + m))
                       </div>
+                      <hr />
+                      <h5>Stats</h5>
+                      <details>
+                        <summary>Details</summary>
+                        <ul>
+                          <li>Number of Z3 calls: <strong>30</strong></li>
+                          <li>Tests on pre-condition: <strong>93421</strong></li>
+                          <li>Tests on inductive: <strong>238106</strong></li>
+                          <li>Tests on post-condition: <strong>25856</strong></li>
+                        </ul>
+                      </details>
                     </div>
                   </div>
                 </div>
@@ -128,6 +140,17 @@ int main() {
                       <div class="code example-clauses">
                         (n > x - 1) || (x < x - n)
                       </div>
+                      <hr />
+                      <h5>Stats</h5>
+                      <details>
+                        <summary>Details</summary>
+                        <ul>
+                          <li>Number of Z3 calls: <strong>12</strong></li>
+                          <li>Tests on pre-condition: <strong>203</strong></li>
+                          <li>Tests on inductive: <strong>28</strong></li>
+                          <li>Tests on post-condition: <strong>43</strong></li>
+                        </ul>
+                      </details>
                     </div>
                   </div>
                 </div>
@@ -162,10 +185,21 @@ int main() {
                     <div class="holder result">
                       <h5>Result Invariant:</h5>
                       <div class="code example-clauses">
-                          ((n < 0) || (n >= 0 - 0)) && <br />
-                          ((n > 0 - 1) || (n <= 0)) && <br />
-                          ((n < 0) || (n >= x))
+                        ((n < 0) || (n >= 0 - 0)) && <br />
+                        ((n > 0 - 1) || (n <= 0)) && <br />
+                        ((n < 0) || (n >= x))
                       </div>
+                      <hr />
+                      <h5>Stats</h5>
+                      <details>
+                        <summary>Details</summary>
+                        <ul>
+                          <li>Number of Z3 calls: <strong>13</strong></li>
+                          <li>Tests on pre-condition: <strong>2084</strong></li>
+                          <li>Tests on inductive: <strong>989</strong></li>
+                          <li>Tests on post-condition: <strong>630</strong></li>
+                        </ul>
+                      </details>
                     </div>
                   </div>
                 </div>

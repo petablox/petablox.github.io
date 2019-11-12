@@ -64,7 +64,3 @@ footer {
   cursor: not-allowed;
   color: rgba(0, 0, 0, 0.125);
 }
-
-.CodeMirror {
-  width: 100%;
-}
