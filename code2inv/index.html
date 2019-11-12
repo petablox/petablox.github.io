@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" href="css/basic.css" />
+    <script src="vendor/codemirror/lib/codemirror.js"></script>
+    <link rel="stylesheet" href="vendor/codemirror/lib/codemirror.css">
+    <script src="vendor/codemirror/mode/clike/clike.js"></script>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <script src="https://kit.fontawesome.com/51df9fae3c.js" crossorigin="anonymous"></script>
+    <title>Hoppity - Petablox</title>
+  </head>
+  <body>
+    <header>
+      <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
+        <a class="navbar-brand" href="#">Code2Inv</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarCollapse">
+          <ul class="navbar-nav mr-auto">
+            <li class="nav-item active">
+              <a class="nav-link" href="/code2inv/">Home <span class="sr-only">(current)</span></a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="/">Petablox</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="/code2inv/blogs">Blogs</a>
+            </li>
+            <li class="nav-items">
+              <a class="nav-link" target="_blank" href="https://github.com/petablox/code2inv">Code</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" target="_blank" href="https://www.seas.upenn.edu/~xsi/data/nips18.pdf">Publications</a>
+            </li>
+          </ul>
+        </div>
+      </nav>
+    </header>
+    <div class="container">
+      <main role="main" class="flex-shrink-0">
+        <div class="row">
+          <div class="col col-7">
+            <div class="card">
+              <div class="card-title holder">
+                <h4>Example</h4>
+              </div>
+              <div class="card-body">
+                <div class="code-holder">
+                  <textarea class="example-code" id="example-code">
+int main() {
+    int x = 1;
+    int m = 1;
+    int n;
+
+    while (x < n) {
+        if (unknown()) {
+            m = x;
+        }
+        x = x + 1;
+    }
+
+    if (n > 1) {
+        assert (m < n);
+        // assert (m >= 1);
+    }
+}
+                  </textarea>
+                </div>
+                <div class="holder">
+                  <h4>Result Invariant:</h4>
+                  <div class="code example-clauses">
+                    ((x <= 1 + 1) || (x > 1 + 1)) && <br />
+                    ((n > 1) || (x > 1 - 1)) && <br />
+                    ((n <= 1) || (n >= 1 + m))
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col col-5">
+            <h1>Learning Loop Invariants for Program Verification</h1>
+            <p>
+              <a target="_blank" href="images/framework.png">
+                <img src="images/framework.png" class="img-fluid" alt="Responsive image">
+              </a>
+            </p>
+            <p>
+              A fundamental problem in program verification concerns inferring loop invariants.
+              The problem is undecidable and even practical instances are challenging.
+              Inspired by how human experts construct loop invariants, we propose a reasoning framework CODE2INV
+              that constructs the solution by multi-step decision making and querying an external program graph
+              memory block. By training with reinforcement learning, CODE2INV captures rich program features and
+              avoids the need for ground truth solutions as supervision.
+            </p>
+          </div>
+        </div>
+      </main>
+    </div>
+    <footer class="footer mt-auto py-3">
+      <div class="container text-center">
+        <span class="text-muted" style="font-size: 12px">&copy; 2019 Petablox, University of Pennsylvania</span>
+      </div>
+    </footer>
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+    <script src="js/index.js"></script>
+  </body>
+</html>

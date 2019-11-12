@@ -1,0 +1,37 @@
+* {
+  /* font-family: 'Courier New', Courier, monospace; */
+  font-size: 14px;
+}
+
+main {
+  padding-top: 80px;
+}
+
+footer {
+  width: 100vw;
+}
+
+.card-title {
+  border-bottom: 1px solid rgba(0, 0, 0, 0.125);
+  margin: 0 !important;
+}
+
+.card-title h4 {
+  margin: 0;
+}
+
+.card-body {
+  padding: 0 !important;
+}
+
+.code-holder {
+  border-bottom: 1px solid rgba(0, 0, 0, 0.125);
+}
+
+.holder {
+  padding: 15px;
+}
+
+.code {
+  font-family: monospace;
+}
