@@ -1,0 +1,62 @@
+[
+  {
+    "op": "replace_type",
+    "loc": [
+      {
+        "start": {
+          "line": 2,
+          "column": 4,
+          "offset": 34
+        },
+        "end": {
+          "line": 2,
+          "column": 12,
+          "offset": 42
+        }
+      }
+    ],
+    "value": null,
+    "type": "ReturnStatement",
+    "ch_rank": null
+  },
+  {
+    "op": "del_node",
+    "loc": [
+      {
+        "start": {
+          "line": 1,
+          "column": 24,
+          "offset": 24
+        },
+        "end": {
+          "line": 1,
+          "column": 26,
+          "offset": 26
+        }
+      }
+    ],
+    "value": null,
+    "type": null,
+    "ch_rank": null
+  },
+  {
+    "op": "replace_val",
+    "loc": [
+      {
+        "start": {
+          "line": 5,
+          "column": 4,
+          "offset": 50
+        },
+        "end": {
+          "line": 5,
+          "column": 9,
+          "offset": 55
+        }
+      }
+    ],
+    "value": "UNKNOWN",
+    "type": null,
+    "ch_rank": null
+  }
+]

@@ -1,0 +1,14 @@
+[
+  {
+    "loc": [
+      {
+        "start": { "line": 5, "column": 41 },
+        "end": { "line": 5, "column": 42 }
+      },
+      {
+        "start": { "line": 5, "column": 55 },
+        "end": { "line": 5, "column": 56 }
+      }
+    ]
+  }
+]

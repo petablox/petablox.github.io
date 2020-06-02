@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<title>Hoppity | Demo</title>
+	<%- include('../partial/includes.ejs') %>
+    <link rel="stylesheet" type="text/css" media="screen" href="css/demo.css" />
+
+    <script src="assets/vendor/codemirror/lib/codemirror.js"></script>	
+    <link rel="stylesheet" href="assets/vendor/codemirror/lib/codemirror.css">
+    <script src="assets/vendor/codemirror/mode/javascript/javascript.js"></script>
+    <script src="https://cdn.jsdelivr.net/gh/google/code-prettify@master/loader/run_prettify.js"></script>
+</head>
+
+<body>
+	<%- include('../partial/navbar.ejs') %>
+
+	<div class="flex-wrapper">
+	<div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <h1>A Demo of Hoppity</h1>
+                <hr>
+            </div>
+        </div>
+        
+	<div class="row">
+
+	<template id="prediction-template">
+            <div class="prediction-holder">
+              <strong class="title"><span class="number"></span> Prediction:</strong>
+              <hr />
+              <ul class="prediction">
+                <li>Operation: <span class="operation"></span></li>
+		<li><div class="value-label">Value: <span class="value"></span></li>
+		<li><div class="type-label"> Type: <span class="type"></span></li>
+		<li><div class="ch-rank-label"> CH Rank: </div> <span class="ch-rank"></span></li>
+              </ul>
+            </div>
+	   </template>
+          <template id="code-example-template">
+            <div class="card code-holder">
+              <div class="card-body">
+                <div class="card-title">
+                  <div class="title">
+                    Example
+                    <span class="example-id">1</span>
+                  </div>
+                  <div class="run-example">
+                    <span>Find Bug</span>
+                    <i class="fas fa-play"></i>
+                  </div>
+                </div>
+                <div class="example-body">
+                  <div class="textarea-holder">
+                    <textarea class="code-container"></textarea>
+                    <div class="floating-boxes">
+                      <div class="float-box float-box-1 level-1" style="display: none"></div>
+                      <div class="float-box float-box-2 level-2" style="display: none"></div>
+                      <div class="float-box float-box-3 level-3" style="display: none"></div>
+                    </div>
+                  </div>
+                  <div class="result-holder">
+                    <ul class="result-list stick">
+                      <li class="result-list-item-1 level-1"></li>
+                      <li class="result-list-item-2 level-2"></li>
+                      <li class="result-list-item-3 level-3"></li>
+                    </ul>
+                  </div>
+                </div>
+                <div class="example-mask" style="display: none">
+                  <img src="assets/images/puff.svg" />
+                </div>
+              </div>
+            </div>
+          </template>
+        <div id="code-examples">
+            <!-- Examples goes here -->
+          </div>
+
+	</div>
+	 	</div>
+<footer class="footer mt-auto pt-3">
+      <div class="container text-center">
+        <span class="text-muted" style="font-size: 12px">&copy; 2020 Petablox, University of Pennsylvania</span>
+      </div>
+    </footer>
+    <br />
+
+<script src="js/demo.js"></script>
+	</div>
+</body>
+

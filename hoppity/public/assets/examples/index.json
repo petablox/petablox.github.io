@@ -1,0 +1,18 @@
+[
+  {
+    "file": "assets/examples/example_0.js.txt",
+    "bugs": "assets/examples/result_0.json"
+  },
+  {
+    "file": "assets/examples/example_1.js.txt",
+    "bugs": "assets/examples/result_1.json"
+  },
+  {
+    "file": "assets/examples/example_2.js.txt",
+    "bugs": "assets/examples/result_2.json"
+  },
+  {
+    "file": "assets/examples/example_3.js.txt",
+    "bugs": "assets/examples/result_3.json"
+  }
+ ]

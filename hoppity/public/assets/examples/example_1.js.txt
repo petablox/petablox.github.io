@@ -1,0 +1,10 @@
+function myFunction(p1, p2) {
+    p1 * P2;
+}
+
+a = "100"
+b = 10
+
+c = myFunction(a,b)
+
+console.log(c / 50)

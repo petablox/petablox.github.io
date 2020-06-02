@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<title>Hoppity | Home</title>
+	<%- include('../partial/includes.ejs') %>
+	<!--<script src="js/index.js"></script>-->
+	<link rel="stylesheet" type="text/css" media="screen" href="css/index.css" />
+</head>
+
+<body>
+	<%- include('../partial/navbar.ejs') %>
+
+	<div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <h1>Hoppity: A Learing Based Approach for Bug Detection and Repair </h1>
+                <hr>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-12">
+                <p>
+                    Hoppity is a Deep Learning approach to detect and fix a broad range of bugs in Javascript programs. 
+                </p>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-12">
+                <h3>Why Deep Learning?</h3>
+                <p>
+		Traditional static analysis tools without leaarning have existed for decades. So, it begs the question, why should we introduce deep learning? As indicated by <a class="home-link" href="https://en.wikipedia.org/wiki/Rice%27s_theorem"> Rice's Theorem </a> any non-trivial semantic property of a program is undecidable. Clearly, there are limitations in traditional analysis techniques. When attempting to enforce an undecidable errors will likely arise. These are often in the form of false positives which can be distracting to the user. False positives warn users about code issues that do not occur in practice. False positives are among the <a class="home-link" href="https://dl.acm.org/doi/pdf/10.1145/2970276.2970347"> major pain points </a> for developers using analysis tools.
+
+
+		Furthermore, traditional analyses often require handwritten rules that target certain error patterns in a particular codebase or specific bug types. They cannot deal with functional bugs (i.e., errors that violate the program specification and yet conform to the coding rules). 
+		
+		The figure below shows one such example. The goal is to split a string using regular expressions. However, the program incorrectly splits the input ' and '  into ['', ' and ', ''] instead of ['' , ''], which is what the developer intended. Since the error is simply a mismatch between the developer’s implicit specification and implementation, static analyzers are incapable of catching it.
+
+		To make matters worse, the popularity of dynamic scripting langauges such as Javascript provide a unique challenge. Bugs in Javascript manifest in exceedingly diverse ways and cannot be captured in a single rule. Therefore, the primary goal of our approach is generality. An effective bug finding tool for Javascript must be operative against a broad spectrum of programming errors.
+
+		<br />
+		<br />
+		<img class="home-img" src="assets/images/code_1.png" />
+                <br />
+		<br />
+   
+                </p>
+                <p>
+		<b> So, why is deep learning the solution? </b> <br />
+
+		   The bugs that static analyzers missed in both cases are in hindsight quite obvious to human programmers. The criteria they use is very simple: any code snippet that seems to deviate from common codepatterns is likely to be buggy. This is precisely the observation that our approach seeks to mimic. In particular, if a model observes a property or an unusual way of splitting strings that never appeared in the training data, it is likely to recognize those abnormal code fragments as potential bugs. In this way, learning provides a highly flexible codebase and bug type independent approach to analysis.
+
+                </p>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-12">
+                <h3>So What is Hoppity?</h3>
+                <p>
+		    Hoppity is a deep learning approach to detect an repair bugs in Javascript programs.
+		    Hoppity uses an approach that leverages large amounts of commit data on Github to locate and repair bugs. Rather than targetting a specific class of bugs (e.g., variable naming issues or binary expression bugs), Hoppity is trained as a single model to deal with a wide range of bug types, encompassing all previously proposed ones. 
+
+		    We represent fixes as a sequence of graph edits on the Abstract Syntax Tree (AST). Paired with a Graph Neural Network model, Hoppity is capable of sophsticated transformations such as adding or removing nodes fromm the graph.
+                </p>
+            </div>
+        </div>
+    </div>
+	<footer class="footer mt-auto py-3">
+      <div class="container text-center">
+        <span class="text-muted" style="font-size: 12px">&copy; 2020 Petablox, University of Pennsylvania</span>
+      </div>
+    </footer>
+
+    <br />
+</body>
+</html>

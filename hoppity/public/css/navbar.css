@@ -1,0 +1,25 @@
+.navbar-brand {
+    font-size: xx-large;
+    /* font-family: 'Courier New', Courier, monospace; */
+    color: #CD5C5C;
+}
+
+.navbar-brand:hover {
+    color: black;
+}
+
+
+.navbar-right {
+    margin-right: 15px;
+}
+
+a.nav-link {
+    font-size: medium;
+    padding: 12.5px;
+    color: #CD5C5C;
+}
+
+
+#repo i {
+    font-size: x-large;
+}
